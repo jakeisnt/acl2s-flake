@@ -5,6 +5,8 @@
 }: let
   inherit (pkgs) lib;
 
+# inspiration: https://github.com/mitchellh/zig-overlay/blob/main/default.nix
+
 { lib, stdenv, callPackage, fetchFromGitHub, runCommandLocal, makeWrapper, substituteAll
 , sbcl, bash, which, perl, nettools
 , openssl, glucose, minisat, abc-verifier, z3, python, acl2
