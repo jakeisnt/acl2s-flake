@@ -1,9 +1,5 @@
-let
-  name = "acl2s-overlay";
-  description = "An acl2s build for Nix";
-in {
-  inherit name description;
-
+# reference: https://github.com/mister-walter/homebrew-acl2s/blob/main/Formula/acl2s.rb
+{
   inputs = {
     nixpkgs.url     = github:nixos/nixpkgs/release-22.05;
     flake-utils.url = github:numtide/flake-utils;
@@ -32,6 +28,8 @@ in {
         lib = pkgs.lib;
         package = import ./default.nix { inherit lib system; };
       in rec {
+          name = "acl2s-overlay";
+          description = "An acl2s build for Nix";
           defaultPackage = package;
           packages.acl2s = defaultPackage;
 
@@ -41,7 +39,7 @@ in {
           };
 
           overlays.default = final: prev: {
-            acl2s = outputs.packages.default;
+            acl2s = defaultPackage;
           };
 
           devShells.default = pkgs.mkShell {
