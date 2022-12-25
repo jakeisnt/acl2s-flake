@@ -10,11 +10,11 @@
       flake = false;
     };
 
+    # necessary for the build
     scripts = {
       url = "https://gitlab.com/acl2s/external-tool-support/scripts.git";
       flake = false;
     };
-
     acl2 = {
       url = github:acl2/acl2;
       flake = false;

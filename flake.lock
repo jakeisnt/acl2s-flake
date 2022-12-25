@@ -1,5 +1,37 @@
 {
   "nodes": {
+    "acl2": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1671865513,
+        "narHash": "sha256-r1MIPJ5k7bDO3gHYaIpQ0AiOo8uKNFW/N5yRrGUJsTA=",
+        "owner": "acl2",
+        "repo": "acl2",
+        "rev": "146a1dd5902bc1f42f45205fda2f734c7d40d13b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "acl2",
+        "repo": "acl2",
+        "type": "github"
+      }
+    },
+    "flake-compat": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1668681692,
+        "narHash": "sha256-Ht91NGdewz8IQLtWZ9LCeNXMSXHUss+9COoqu6JLmXU=",
+        "owner": "edolstra",
+        "repo": "flake-compat",
+        "rev": "009399224d5e398d03b22badca40a37ac85412a1",
+        "type": "github"
+      },
+      "original": {
+        "owner": "edolstra",
+        "repo": "flake-compat",
+        "type": "github"
+      }
+    },
     "flake-utils": {
       "locked": {
         "lastModified": 1629481132,
@@ -17,21 +49,39 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1631370438,
-        "narHash": "sha256-eKZ3xtRu/KuA7d3l/idMlD22qAcklSizVMa26R6ftYQ=",
-        "path": "/nix/store/nz0ad70ka68mwz5jllqm5fld2m4bcmal-source",
-        "rev": "205c2ada66927c65a302aad8281d7bd7d7509432",
-        "type": "path"
+        "lastModified": 1671813978,
+        "narHash": "sha256-oo4we+9IO1D+QS1mOSNh08l9ABDPWLyqvNC0DD0QtZM=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "79e63f30ed2ff36cd0d9c2f7dadae5925c1a65db",
+        "type": "github"
       },
       "original": {
-        "id": "nixpkgs",
-        "type": "indirect"
+        "owner": "nixos",
+        "ref": "release-22.05",
+        "repo": "nixpkgs",
+        "type": "github"
       }
     },
     "root": {
       "inputs": {
+        "acl2": "acl2",
+        "flake-compat": "flake-compat",
         "flake-utils": "flake-utils",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs",
+        "scripts": "scripts"
+      }
+    },
+    "scripts": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-Q/PUePDhoS2YhM0VkC/ANXOp2ZJjU8xq3MI56DKWvWk=",
+        "type": "file",
+        "url": "https://gitlab.com/acl2s/external-tool-support/scripts.git"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://gitlab.com/acl2s/external-tool-support/scripts.git"
       }
     }
   },
