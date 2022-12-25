@@ -27,6 +27,7 @@
 
 in pkgs.stdenv.mkDerivation rec {
   pname = "acl2s";
+  # TODO: get version from acl2 itself? how?
   version = "8.4";
 
   src = acl2-source;
@@ -39,10 +40,11 @@ in pkgs.stdenv.mkDerivation rec {
   # $IPASIR_SHARED_LIBRARY environment variable.
   libipasir = pkgs.callPackage ./libipasirglucose4 { };
 
-  # patches = [(substituteAll {
+  # TODO: Do I need patches?
+  # patches = [(pkgs.substituteAll {
   #   src = ./0001-Fix-some-paths-for-Nix-build.patch;
   #   libipasir = "${libipasir}/lib/${libipasir.libname}";
-  #   openssl = openssl.out;
+  #   openssl = pkgs.openssl.out;
   # })];
 
   buildInputs = [
