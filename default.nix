@@ -11,8 +11,6 @@
   certifyBooks ? true,
 }: let
   inherit (pkgs) lib;
-
-
   # https://gitlab.com/acl2s/external-tool-support/scripts/-/blob/master/gen-acl2s.sh
 
   # Disable immobile space so we don't run out of memory on large books, and
