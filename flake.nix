@@ -11,24 +11,23 @@
     };
 
     # necessary for the build
-    scripts = {
+    acl2s-scripts = {
       url = "https://gitlab.com/acl2s/external-tool-support/scripts.git";
       flake = false;
     };
-    acl2 = {
+    acl2-source = {
       url = github:acl2/acl2;
       flake = false;
     };
   };
 
-  outputs = { self, nixpkgs, flake-utils, scripts, acl2, ... } @ inputs:
+  outputs = { self, nixpkgs, flake-utils, acl2s-scripts, acl2-source, ... } @ inputs:
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = nixpkgs.legacyPackages.${system};
         lib = pkgs.lib;
         certifyBooks = false;
-        acl2-source = acl2;
-        package = import ./default.nix { inherit system pkgs certifyBooks acl2-source; };
+        package = import ./default.nix { inherit system pkgs certifyBooks acl2-source acl2s-scripts; };
       in rec {
           name = "acl2s-overlay";
           description = "An acl2s build for Nix";

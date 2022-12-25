@@ -2,6 +2,7 @@
 {
   pkgs ? import <nixpkgs> {},
   system ? builtins.currentSystem,
+  acl2s-scripts, # TODO: add an override here
   acl2-source ? (pkgs.fetchFromGitHub {
     owner = "acl2";
     repo = "acl2";
@@ -12,7 +13,6 @@
 }: let
   inherit (pkgs) lib;
 
-# inspiration: https://github.com/mitchellh/zig-overlay/blob/main/default.nix
 
 # { lib, stdenv, callPackage, fetchFromGitHub, runCommandLocal, makeWrapper, substituteAll
 # , sbcl, bash, which, perl, nettools

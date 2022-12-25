@@ -1,6 +1,6 @@
 {
   "nodes": {
-    "acl2": {
+    "acl2-source": {
       "flake": false,
       "locked": {
         "lastModified": 1671865513,
@@ -14,6 +14,18 @@
         "owner": "acl2",
         "repo": "acl2",
         "type": "github"
+      }
+    },
+    "acl2s-scripts": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-Q/PUePDhoS2YhM0VkC/ANXOp2ZJjU8xq3MI56DKWvWk=",
+        "type": "file",
+        "url": "https://gitlab.com/acl2s/external-tool-support/scripts.git"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://gitlab.com/acl2s/external-tool-support/scripts.git"
       }
     },
     "flake-compat": {
@@ -65,23 +77,11 @@
     },
     "root": {
       "inputs": {
-        "acl2": "acl2",
+        "acl2-source": "acl2-source",
+        "acl2s-scripts": "acl2s-scripts",
         "flake-compat": "flake-compat",
         "flake-utils": "flake-utils",
-        "nixpkgs": "nixpkgs",
-        "scripts": "scripts"
-      }
-    },
-    "scripts": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-Q/PUePDhoS2YhM0VkC/ANXOp2ZJjU8xq3MI56DKWvWk=",
-        "type": "file",
-        "url": "https://gitlab.com/acl2s/external-tool-support/scripts.git"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://gitlab.com/acl2s/external-tool-support/scripts.git"
+        "nixpkgs": "nixpkgs"
       }
     }
   },
