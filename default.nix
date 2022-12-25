@@ -2,45 +2,45 @@
 {
   pkgs ? import <nixpkgs> {},
   system ? builtins.currentSystem,
+  acl2-source ? (pkgs.fetchFromGitHub {
+    owner = "acl2";
+    repo = "acl2";
+    rev = "master";
+    sha256 = "0yg7kfj0xnmz5v9dx1g1f8sbc9xmmyciq4qhv4jkqijz91i00vig";
+  }),
+  certifyBooks ? true,
 }: let
   inherit (pkgs) lib;
 
 # inspiration: https://github.com/mitchellh/zig-overlay/blob/main/default.nix
 
-{ lib, stdenv, callPackage, fetchFromGitHub, runCommandLocal, makeWrapper, substituteAll
-, sbcl, bash, which, perl, nettools
-, openssl, glucose, minisat, abc-verifier, z3, python, acl2
-, certifyBooks ? true
-} @ args:
+# { lib, stdenv, callPackage, fetchFromGitHub, runCommandLocal, makeWrapper, substituteAll
+# , sbcl, bash, which, perl, nettools
+# , openssl, glucose, minisat, abc-verifier, z3, python, acl2
+# , certifyBooks ? true
+# } @ args:
 
-let
   # Disable immobile space so we don't run out of memory on large books, and
   # supply 2GB of dynamic space to avoid exhausting the heap while building the
   # ACL2 system itself; see
   # https://www.cs.utexas.edu/users/moore/acl2/current/HTML/installation/requirements.html#Obtaining-SBCL
-  sbcl' = args.sbcl.override { disableImmobileSpace = true; };
-  sbcl = runCommandLocal args.sbcl.name { buildInputs = [ makeWrapper ]; } ''
+  sbcl' = pkgs.sbcl.override { disableImmobileSpace = true; };
+  sbcl = pkgs.runCommandLocal pkgs.sbcl.name { buildInputs = [ pkgs.makeWrapper ]; } ''
     makeWrapper ${sbcl'}/bin/sbcl $out/bin/sbcl \
       --add-flags "--dynamic-space-size 2000"
   '';
 
-in stdenv.mkDerivation rec {
+in pkgs.stdenv.mkDerivation rec {
   pname = "acl2";
   version = "8.4";
 
-  src = fetchFromGitHub {
-    owner = "acl2";
-    repo = "acl2";
-    rev = "master";
-    sha256 = "0yg7kfj0xnmz5v9dx1g1f8sbc9xmmyciq4qhv4jkqijz91i00vig";
-  };
-
+  src = acl2-source;
   # You can swap this out with any other IPASIR implementation at
   # build time by using overrideAttrs (make sure the derivation you
   # use has a "libname" attribute so we can plug it into the patch
   # below).  Or, you can override it at runtime by setting the
   # $IPASIR_SHARED_LIBRARY environment variable.
-  libipasir = callPackage ./libipasirglucose4 { };
+  libipasir = pkgs.callPackage ./libipasirglucose4 { };
 
   # patches = [(substituteAll {
   #   src = ./0001-Fix-some-paths-for-Nix-build.patch;
@@ -51,13 +51,13 @@ in stdenv.mkDerivation rec {
   buildInputs = [
     # ACL2 itself only needs a Common Lisp compiler/interpreter:
     sbcl
-  ] ++ lib.optionals certifyBooks [
+  ] ++ lib.optionals certifyBooks (with pkgs; [
     # To build community books, we need Perl and a couple of utilities:
     which perl nettools makeWrapper
     # Some of the books require one or more of these external tools:
     openssl.out glucose minisat abc-verifier libipasir
     z3 (python.withPackages (ps: [ ps.z3 ]))
-  ];
+  ]);
 
   # NOTE: Parallel building can be memory-intensive depending on the number of
   # concurrent jobs.  For example, this build has been seen to use >120GB of
@@ -143,7 +143,7 @@ in stdenv.mkDerivation rec {
       # other things thrown in.
       mit gpl2 llgpl21 cc0 publicDomain # unfreeRedistributable: omitted for the sake of an easy install
     ];
-    maintainers = with maintainers; [ kini raskin ];
+    maintainers = with maintainers; [ jakeisnt ];
     platforms = platforms.all;
   };
 }

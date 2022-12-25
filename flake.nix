@@ -26,7 +26,9 @@
       let
         pkgs = nixpkgs.legacyPackages.${system};
         lib = pkgs.lib;
-        package = import ./default.nix { inherit lib system; };
+        certifyBooks = false;
+        acl2-source = acl2;
+        package = import ./default.nix { inherit system pkgs certifyBooks acl2-source; };
       in rec {
           name = "acl2s-overlay";
           description = "An acl2s build for Nix";
