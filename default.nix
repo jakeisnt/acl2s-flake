@@ -1,4 +1,3 @@
-
 {
   pkgs ? import <nixpkgs> {},
   system ? builtins.currentSystem,
@@ -14,11 +13,7 @@
   inherit (pkgs) lib;
 
 
-# { lib, stdenv, callPackage, fetchFromGitHub, runCommandLocal, makeWrapper, substituteAll
-# , sbcl, bash, which, perl, nettools
-# , openssl, glucose, minisat, abc-verifier, z3, python, acl2
-# , certifyBooks ? true
-# } @ args:
+  # https://gitlab.com/acl2s/external-tool-support/scripts/-/blob/master/gen-acl2s.sh
 
   # Disable immobile space so we don't run out of memory on large books, and
   # supply 2GB of dynamic space to avoid exhausting the heap while building the
@@ -31,10 +26,12 @@
   '';
 
 in pkgs.stdenv.mkDerivation rec {
-  pname = "acl2";
+  pname = "acl2s";
   version = "8.4";
 
   src = acl2-source;
+  scripts = acl2s-scripts;
+
   # You can swap this out with any other IPASIR implementation at
   # build time by using overrideAttrs (make sure the derivation you
   # use has a "libname" attribute so we can plug it into the patch
@@ -139,8 +136,7 @@ in pkgs.stdenv.mkDerivation rec {
       # ACL2 itself is bsd3
       bsd3
     ] ++ optionals certifyBooks [
-      # The community books are mostly bsd3 or mit but with a few
-      # other things thrown in.
+      # The community books are mostly bsd3 or mit but with a few other things thrown in.
       mit gpl2 llgpl21 cc0 publicDomain # unfreeRedistributable: omitted for the sake of an easy install
     ];
     maintainers = with maintainers; [ jakeisnt ];
